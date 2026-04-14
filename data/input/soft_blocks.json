@@ -1,0 +1,121 @@
+{
+  "soft_blocks": [
+    {
+      "type": "teacher_preferred_slot",
+      "teacher_id": "T1",
+      "day": "Segunda",
+      "slot": 1,
+      "weight": 5,
+      "_comment": "Ana Paula prefere comecar segunda cedo"
+    },
+    {
+      "type": "teacher_preferred_slot",
+      "teacher_id": "T1",
+      "day": "Terca",
+      "slot": 1,
+      "weight": 3
+    },
+    {
+      "type": "teacher_preferred_slot",
+      "teacher_id": "T2",
+      "day": "Quarta",
+      "slot": 2,
+      "weight": 4,
+      "_comment": "Carlos prefere Quarta no segundo horario"
+    },
+    {
+      "type": "teacher_preferred_slot",
+      "teacher_id": "T4",
+      "day": "Terca",
+      "slot": 3,
+      "weight": 3
+    },
+    {
+      "type": "avoid_last_slot",
+      "class_id": "C1",
+      "weight": 4,
+      "_comment": "Turma 1A nao deve ter aula no ultimo horario do dia"
+    },
+    {
+      "type": "avoid_last_slot",
+      "class_id": "C2",
+      "weight": 4
+    },
+    {
+      "type": "avoid_last_slot",
+      "class_id": "C3",
+      "weight": 3
+    },
+    {
+      "type": "avoid_teacher_gaps",
+      "teacher_id": "T1",
+      "weight": 5,
+      "_comment": "Minimizar horarios vagos para Ana Paula"
+    },
+    {
+      "type": "avoid_teacher_gaps",
+      "teacher_id": "T2",
+      "weight": 4
+    },
+    {
+      "type": "avoid_teacher_gaps",
+      "teacher_id": "T3",
+      "weight": 3
+    },
+    {
+      "type": "avoid_teacher_gaps",
+      "teacher_id": "T4",
+      "weight": 3
+    },
+    {
+      "type": "subject_spread",
+      "class_id": "C1",
+      "subject_id": "MAT",
+      "weight": 3,
+      "_comment": "Matematica deve ser espalhada pela semana"
+    },
+    {
+      "type": "subject_spread",
+      "class_id": "C2",
+      "subject_id": "MAT",
+      "weight": 3
+    },
+    {
+      "type": "subject_spread",
+      "class_id": "C3",
+      "subject_id": "MAT",
+      "weight": 3
+    },
+    {
+      "type": "subject_spread",
+      "class_id": "C3",
+      "subject_id": "FIS",
+      "weight": 2
+    },
+    {
+      "type": "subject_spread",
+      "class_id": "C3",
+      "subject_id": "QUI",
+      "weight": 2
+    },
+    {
+      "type": "max_consecutive",
+      "class_id": "C3",
+      "max_consecutive": 3,
+      "weight": 5,
+      "_comment": "3A nao deve ter mais de 3 aulas consecutivas"
+    },
+    {
+      "type": "max_consecutive",
+      "class_id": "C1",
+      "max_consecutive": 2,
+      "weight": 4
+    },
+    {
+      "type": "max_consecutive",
+      "class_id": "C2",
+      "max_consecutive": 2,
+      "weight": 4
+    }
+  ]
+}

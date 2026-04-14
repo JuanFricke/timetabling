@@ -1,0 +1,97 @@
+{
+  "school": {
+    "days": ["Segunda", "Terca", "Quarta", "Quinta", "Sexta"],
+    "slots": [
+      {"id": 1, "label": "07:00"},
+      {"id": 2, "label": "08:00"},
+      {"id": 3, "label": "09:00"},
+      {"id": 4, "label": "10:00"},
+      {"id": 5, "label": "13:00"},
+      {"id": 6, "label": "14:00"},
+      {"id": 7, "label": "15:00"},
+      {"id": 8, "label": "16:00"}
+    ]
+  },
+  "teachers": [
+    {
+      "id": "T1",
+      "name": "Ana Paula",
+      "subjects": ["MAT", "FIS"]
+    },
+    {
+      "id": "T2",
+      "name": "Carlos Mendes",
+      "subjects": ["PORT", "LIT"]
+    },
+    {
+      "id": "T3",
+      "name": "Beatriz Costa",
+      "subjects": ["BIO", "QUI"]
+    },
+    {
+      "id": "T4",
+      "name": "Rodrigo Lima",
+      "subjects": ["HIS", "GEO"]
+    }
+  ],
+  "classes": [
+    {
+      "id": "C1",
+      "name": "1A",
+      "level": "fundamental",
+      "available_slots": [1, 2, 3, 4]
+    },
+    {
+      "id": "C2",
+      "name": "1B",
+      "level": "fundamental",
+      "available_slots": [1, 2, 3, 4]
+    },
+    {
+      "id": "C3",
+      "name": "3A",
+      "level": "medio",
+      "available_slots": [1, 2, 3, 4, 5, 6, 7, 8]
+    }
+  ],
+  "subjects": [
+    {"id": "MAT", "name": "Matematica"},
+    {"id": "PORT", "name": "Portugues"},
+    {"id": "BIO", "name": "Biologia"},
+    {"id": "HIS", "name": "Historia"},
+    {"id": "FIS", "name": "Fisica"},
+    {"id": "QUI", "name": "Quimica"},
+    {"id": "GEO", "name": "Geografia"},
+    {"id": "LIT", "name": "Literatura"}
+  ],
+  "requirements": [
+    {"class_id": "C1", "subject_id": "MAT", "teacher_id": "T1", "hours_per_week": 4},
+    {"class_id": "C1", "subject_id": "PORT", "teacher_id": "T2", "hours_per_week": 4},
+    {"class_id": "C1", "subject_id": "HIS", "teacher_id": "T4", "hours_per_week": 2},
+    {"class_id": "C1", "subject_id": "BIO", "teacher_id": "T3", "hours_per_week": 2},
+
+    {"class_id": "C2", "subject_id": "MAT", "teacher_id": "T1", "hours_per_week": 4},
+    {"class_id": "C2", "subject_id": "PORT", "teacher_id": "T2", "hours_per_week": 4},
+    {"class_id": "C2", "subject_id": "GEO", "teacher_id": "T4", "hours_per_week": 2},
+    {"class_id": "C2", "subject_id": "BIO", "teacher_id": "T3", "hours_per_week": 2},
+
+    {"class_id": "C3", "subject_id": "MAT", "teacher_id": "T1", "hours_per_week": 4},
+    {"class_id": "C3", "subject_id": "FIS", "teacher_id": "T1", "hours_per_week": 3},
+    {"class_id": "C3", "subject_id": "QUI", "teacher_id": "T3", "hours_per_week": 3},
+    {"class_id": "C3", "subject_id": "BIO", "teacher_id": "T3", "hours_per_week": 2},
+    {"class_id": "C3", "subject_id": "PORT", "teacher_id": "T2", "hours_per_week": 3},
+    {"class_id": "C3", "subject_id": "LIT", "teacher_id": "T2", "hours_per_week": 2},
+    {"class_id": "C3", "subject_id": "HIS", "teacher_id": "T4", "hours_per_week": 2},
+    {"class_id": "C3", "subject_id": "GEO", "teacher_id": "T4", "hours_per_week": 2}
+  ],
+  "hard_blocks": [
+    {"type": "teacher_unavailable", "teacher_id": "T1", "day": "Sexta",   "slot": 1},
+    {"type": "teacher_unavailable", "teacher_id": "T1", "day": "Sexta",   "slot": 2},
+    {"type": "teacher_unavailable", "teacher_id": "T2", "day": "Segunda", "slot": 1},
+    {"type": "teacher_unavailable", "teacher_id": "T3", "day": "Quarta",  "slot": 3},
+    {"type": "teacher_unavailable", "teacher_id": "T4", "day": "Quinta",  "slot": 4},
+    {"type": "class_unavailable",   "class_id":   "C1", "day": "Sexta",   "slot": 4},
+    {"type": "class_unavailable",   "class_id":   "C2", "day": "Sexta",   "slot": 4},
+    {"type": "class_unavailable",   "class_id":   "C3", "day": "Sexta",   "slot": 8}
+  ]
+}

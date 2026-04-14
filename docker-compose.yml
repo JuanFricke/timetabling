@@ -1,0 +1,38 @@
+services:
+  db:
+    image: mysql:8.4
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-rootpass}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-timetabling}
+      MYSQL_USER: ${MYSQL_USER:-app}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-apppass}
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./migrations/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD:-rootpass}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  app:
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: mysql+pymysql://${MYSQL_USER:-app}:${MYSQL_PASSWORD:-apppass}@db:3306/${MYSQL_DATABASE:-timetabling}
+      HARD_BLOCKS_PATH: /app/data/input/hard_blocks.json
+      SOFT_BLOCKS_PATH: /app/data/input/soft_blocks.json
+      OUTPUT_DIR: /app/data/output
+      CP_TIME_LIMIT_SECONDS: ${CP_TIME_LIMIT_SECONDS:-60}
+      LS_MAX_ITERATIONS: ${LS_MAX_ITERATIONS:-5000}
+    volumes:
+      - ./data:/app/data
+    command: ["uv", "run", "python", "-m", "timetabling.main", "solve"]
+
+volumes:
+  mysql_data:
