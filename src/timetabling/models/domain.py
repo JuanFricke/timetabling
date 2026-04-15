@@ -194,6 +194,30 @@ class HardBlocksInput(BaseModel):
             if hb.slot not in slot_ids:
                 raise ValueError(f"Hard block references unknown slot '{hb.slot}'")
 
+        # Hard constraint: every available slot of every class must be covered.
+        # Total weekly capacity = days × available_slots_count.
+        # If the sum of requirements for a class does not equal its capacity,
+        # some slots would be left empty — which is a user data error.
+        n_days = len(self.school.days)
+        class_capacity: dict[str, int] = {
+            cls.id: n_days * len(cls.available_slots) for cls in self.classes
+        }
+        class_hours: dict[str, int] = {}
+        for req in self.requirements:
+            class_hours[req.class_id] = class_hours.get(req.class_id, 0) + req.hours_per_week
+
+        for cls in self.classes:
+            capacity = class_capacity[cls.id]
+            assigned = class_hours.get(cls.id, 0)
+            if assigned != capacity:
+                raise ValueError(
+                    f"Class '{cls.name}' (id={cls.id}) has {len(cls.available_slots)} slots/day "
+                    f"× {n_days} days = {capacity} slots/week, "
+                    f"but requirements total {assigned} hours/week. "
+                    f"{'Add' if assigned < capacity else 'Remove'} "
+                    f"{abs(capacity - assigned)} hour(s) to fully fill all available slots."
+                )
+
         return self
 
 
