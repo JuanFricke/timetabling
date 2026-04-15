@@ -65,33 +65,32 @@
     {"id": "LIT", "name": "Literatura"}
   ],
   "requirements": [
-    {"class_id": "C1", "subject_id": "MAT", "teacher_id": "T1", "hours_per_week": 4},
-    {"class_id": "C1", "subject_id": "PORT", "teacher_id": "T2", "hours_per_week": 4},
-    {"class_id": "C1", "subject_id": "HIS", "teacher_id": "T4", "hours_per_week": 2},
-    {"class_id": "C1", "subject_id": "BIO", "teacher_id": "T3", "hours_per_week": 2},
+    {"class_id": "C1", "subject_id": "MAT",  "teacher_id": "T1", "hours_per_week": 5},
+    {"class_id": "C1", "subject_id": "PORT", "teacher_id": "T2", "hours_per_week": 5},
+    {"class_id": "C1", "subject_id": "HIS",  "teacher_id": "T4", "hours_per_week": 4},
+    {"class_id": "C1", "subject_id": "GEO",  "teacher_id": "T4", "hours_per_week": 3},
+    {"class_id": "C1", "subject_id": "BIO",  "teacher_id": "T3", "hours_per_week": 3},
 
-    {"class_id": "C2", "subject_id": "MAT", "teacher_id": "T1", "hours_per_week": 4},
-    {"class_id": "C2", "subject_id": "PORT", "teacher_id": "T2", "hours_per_week": 4},
-    {"class_id": "C2", "subject_id": "GEO", "teacher_id": "T4", "hours_per_week": 2},
-    {"class_id": "C2", "subject_id": "BIO", "teacher_id": "T3", "hours_per_week": 2},
+    {"class_id": "C2", "subject_id": "MAT",  "teacher_id": "T1", "hours_per_week": 5},
+    {"class_id": "C2", "subject_id": "PORT", "teacher_id": "T2", "hours_per_week": 5},
+    {"class_id": "C2", "subject_id": "GEO",  "teacher_id": "T4", "hours_per_week": 4},
+    {"class_id": "C2", "subject_id": "HIS",  "teacher_id": "T4", "hours_per_week": 3},
+    {"class_id": "C2", "subject_id": "BIO",  "teacher_id": "T3", "hours_per_week": 3},
 
-    {"class_id": "C3", "subject_id": "MAT", "teacher_id": "T1", "hours_per_week": 4},
-    {"class_id": "C3", "subject_id": "FIS", "teacher_id": "T1", "hours_per_week": 3},
-    {"class_id": "C3", "subject_id": "QUI", "teacher_id": "T3", "hours_per_week": 3},
-    {"class_id": "C3", "subject_id": "BIO", "teacher_id": "T3", "hours_per_week": 2},
-    {"class_id": "C3", "subject_id": "PORT", "teacher_id": "T2", "hours_per_week": 3},
-    {"class_id": "C3", "subject_id": "LIT", "teacher_id": "T2", "hours_per_week": 2},
-    {"class_id": "C3", "subject_id": "HIS", "teacher_id": "T4", "hours_per_week": 2},
-    {"class_id": "C3", "subject_id": "GEO", "teacher_id": "T4", "hours_per_week": 2}
+    {"class_id": "C3", "subject_id": "MAT",  "teacher_id": "T1", "hours_per_week": 6},
+    {"class_id": "C3", "subject_id": "FIS",  "teacher_id": "T1", "hours_per_week": 4},
+    {"class_id": "C3", "subject_id": "PORT", "teacher_id": "T2", "hours_per_week": 6},
+    {"class_id": "C3", "subject_id": "LIT",  "teacher_id": "T2", "hours_per_week": 5},
+    {"class_id": "C3", "subject_id": "QUI",  "teacher_id": "T3", "hours_per_week": 6},
+    {"class_id": "C3", "subject_id": "BIO",  "teacher_id": "T3", "hours_per_week": 4},
+    {"class_id": "C3", "subject_id": "HIS",  "teacher_id": "T4", "hours_per_week": 5},
+    {"class_id": "C3", "subject_id": "GEO",  "teacher_id": "T4", "hours_per_week": 4}
   ],
   "hard_blocks": [
     {"type": "teacher_unavailable", "teacher_id": "T1", "day": "Sexta",   "slot": 1},
     {"type": "teacher_unavailable", "teacher_id": "T1", "day": "Sexta",   "slot": 2},
     {"type": "teacher_unavailable", "teacher_id": "T2", "day": "Segunda", "slot": 1},
     {"type": "teacher_unavailable", "teacher_id": "T3", "day": "Quarta",  "slot": 3},
-    {"type": "teacher_unavailable", "teacher_id": "T4", "day": "Quinta",  "slot": 4},
-    {"type": "class_unavailable",   "class_id":   "C1", "day": "Sexta",   "slot": 4},
-    {"type": "class_unavailable",   "class_id":   "C2", "day": "Sexta",   "slot": 4},
-    {"type": "class_unavailable",   "class_id":   "C3", "day": "Sexta",   "slot": 8}
+    {"type": "teacher_unavailable", "teacher_id": "T4", "day": "Quinta",  "slot": 4}
   ]
 }
