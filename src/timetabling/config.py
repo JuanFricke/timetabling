@@ -16,3 +16,4 @@ SOFT_BLOCKS_PATH: str = get("SOFT_BLOCKS_PATH", "data/input/soft_blocks.json")  
 OUTPUT_DIR: str = get("OUTPUT_DIR", "data/output")  # type: ignore[assignment]
 CP_TIME_LIMIT_SECONDS: int = int(get("CP_TIME_LIMIT_SECONDS", "60"))  # type: ignore[arg-type]
 LS_MAX_ITERATIONS: int = int(get("LS_MAX_ITERATIONS", "5000"))  # type: ignore[arg-type]
+JWT_SECRET_KEY: str = get("JWT_SECRET_KEY", "change-me-in-production")  # type: ignore[assignment]

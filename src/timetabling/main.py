@@ -3,12 +3,17 @@ CLI entrypoint.
 
 Usage:
     uv run python -m timetabling.main solve [OPTIONS]
+    uv run python -m timetabling.main serve [OPTIONS]
 
-Options:
+solve options:
     --hard PATH     Path to hard_blocks.json  [default: from env / data/input/hard_blocks.json]
     --soft PATH     Path to soft_blocks.json  [default: from env / data/input/soft_blocks.json]
     --output DIR    Output directory for CSVs  [default: from env / data/output]
     --no-db         Skip MySQL persistence
+
+serve options:
+    --port PORT     Port to listen on  [default: 5000]
+    --host HOST     Host to bind to   [default: 0.0.0.0]
 """
 from __future__ import annotations
 
@@ -38,6 +43,8 @@ def _parse_args() -> dict:
         "soft": cfg.SOFT_BLOCKS_PATH,
         "output": cfg.OUTPUT_DIR,
         "no_db": False,
+        "port": "5000",
+        "host": "0.0.0.0",
     }
 
     if not args:
@@ -60,6 +67,12 @@ def _parse_args() -> dict:
         elif a == "--no-db":
             opts["no_db"] = True
             i += 1
+        elif a == "--port" and i + 1 < len(args):
+            opts["port"] = args[i + 1]
+            i += 2
+        elif a == "--host" and i + 1 < len(args):
+            opts["host"] = args[i + 1]
+            i += 2
         else:
             i += 1
 
@@ -70,7 +83,8 @@ def _print_help() -> None:
     console.print(
         Panel(
             "[bold]timetabling solve[/bold] [--hard PATH] [--soft PATH] "
-            "[--output DIR] [--no-db]",
+            "[--output DIR] [--no-db]\n"
+            "[bold]timetabling serve[/bold] [--host HOST] [--port PORT]",
             title="School Timetabling — Hybrid CP + Local Search",
         )
     )
@@ -197,10 +211,25 @@ def cmd_solve(opts: dict) -> None:
     console.print("\n[bold green]Done![/bold green]")
 
 
+def cmd_serve(opts: dict) -> None:
+    from timetabling.api import create_app
+
+    host = opts["host"]
+    port = int(opts["port"])
+    console.rule("[bold blue]School Timetabling — API Server")
+    console.print(f"  Listening on [green]http://{host}:{port}[/green]")
+    console.print("  State initialised from disk (hard_blocks.json / soft_blocks.json)")
+    console.print("  Press Ctrl+C to stop\n")
+    app = create_app()
+    app.run(host=host, port=port, debug=False, threaded=True)
+
+
 def app() -> None:
     opts = _parse_args()
     if opts["command"] == "solve":
         cmd_solve(opts)
+    elif opts["command"] == "serve":
+        cmd_serve(opts)
     else:
         _print_help()
         sys.exit(1)
