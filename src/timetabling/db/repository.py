@@ -9,6 +9,7 @@ from timetabling.db.schema import (
     RequirementRow,
     ScheduleEntryRow,
     ScheduleRunRow,
+    SchoolRow,
     SlotRow,
     SubjectRow,
     TeacherRow,
@@ -42,6 +43,27 @@ def wait_for_db(database_url: str, retries: int = 20, delay: float = 3.0) -> Non
             time.sleep(delay)
 
 
+# ---------------------------------------------------------------------------
+# School auth
+# ---------------------------------------------------------------------------
+
+def create_school(session: Session, name: str, email: str, password_hash: str) -> SchoolRow:
+    """Insert a new school and return the persisted row."""
+    school = SchoolRow(name=name, email=email, password_hash=password_hash)
+    session.add(school)
+    session.flush()
+    return school
+
+
+def find_school_by_email(session: Session, email: str) -> SchoolRow | None:
+    """Return the school with the given email, or None."""
+    return session.query(SchoolRow).filter_by(email=email).first()
+
+
+# ---------------------------------------------------------------------------
+# Problem data
+# ---------------------------------------------------------------------------
+
 def upsert_problem(session: Session, problem: HardBlocksInput) -> None:
     """Insert or update all static problem data (teachers, classes, etc.)."""
 
@@ -73,7 +95,7 @@ def upsert_problem(session: Session, problem: HardBlocksInput) -> None:
             for slot_id in cls.available_slots:
                 session.add(ClassSlotRow(class_id=cls.id, slot_id=slot_id))
 
-    # Requirements
+    # Requirements (always replaced)
     session.query(RequirementRow).delete()
     for req in problem.requirements:
         session.add(
@@ -88,6 +110,10 @@ def upsert_problem(session: Session, problem: HardBlocksInput) -> None:
     session.flush()
 
 
+# ---------------------------------------------------------------------------
+# Schedule persistence
+# ---------------------------------------------------------------------------
+
 def save_schedule(
     session: Session,
     schedule: Schedule,
@@ -95,10 +121,12 @@ def save_schedule(
     cp_feasible: bool,
     soft_score_initial: int | None,
     ls_iterations: int | None,
+    school_id: int | None = None,
     notes: str | None = None,
 ) -> int:
     """Persist a schedule run and return the run id."""
     run = ScheduleRunRow(
+        school_id=school_id,
         cp_feasible=cp_feasible,
         soft_score_initial=soft_score_initial,
         soft_score_final=schedule.soft_score,
