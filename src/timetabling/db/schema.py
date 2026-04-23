@@ -17,6 +17,20 @@ class Base(DeclarativeBase):
     pass
 
 
+class SchoolRow(Base):
+    __tablename__ = "schools"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    name: Mapped[str] = mapped_column(String(255), nullable=False)
+    email: Mapped[str] = mapped_column(String(255), nullable=False, unique=True)
+    password_hash: Mapped[str] = mapped_column(String(255), nullable=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+
+    runs: Mapped[list["ScheduleRunRow"]] = relationship(
+        back_populates="school", cascade="all, delete-orphan"
+    )
+
+
 class SlotRow(Base):
     __tablename__ = "slots"
 
@@ -90,12 +104,17 @@ class ScheduleRunRow(Base):
     __tablename__ = "schedule_runs"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    school_id: Mapped[int | None] = mapped_column(
+        Integer, ForeignKey("schools.id", ondelete="SET NULL"), nullable=True
+    )
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
     cp_feasible: Mapped[bool] = mapped_column(Boolean, default=False)
     soft_score_initial: Mapped[int | None] = mapped_column(Integer, nullable=True)
     soft_score_final: Mapped[int | None] = mapped_column(Integer, nullable=True)
     ls_iterations: Mapped[int | None] = mapped_column(Integer, nullable=True)
     notes: Mapped[str | None] = mapped_column(Text, nullable=True)
+
+    school: Mapped[SchoolRow | None] = relationship(back_populates="runs")
     entries: Mapped[list["ScheduleEntryRow"]] = relationship(
         back_populates="run", cascade="all, delete-orphan"
     )
