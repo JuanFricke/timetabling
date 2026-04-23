@@ -11,6 +11,8 @@ Supported soft block types:
                                a class's available_slots on any day
   - avoid_teacher_gaps       : +weight for each idle slot between the first and last
                                lesson of a teacher on a day
+  - avoid_class_gaps         : +weight for each idle slot between the first and last
+                               lesson of a class on a day
   - subject_spread           : +weight for each day a subject appears more than once
                                for a class (prefers lessons spread across days)
   - max_consecutive          : +weight for each run of lessons exceeding max_consecutive
@@ -21,6 +23,7 @@ from __future__ import annotations
 from collections import defaultdict
 
 from timetabling.models.domain import (
+    AvoidClassGapsBlock,
     AvoidLastSlotBlock,
     AvoidTeacherGapsBlock,
     ClassPreferredSlotBlock,
@@ -122,6 +125,15 @@ def score(
                 if len(slots) < 2:
                     continue
                 # Gaps = (last - first + 1) - number_of_lessons
+                span = slots[-1] - slots[0] + 1
+                gaps = span - len(slots)
+                penalty += gaps * sb.weight
+
+        elif isinstance(sb, AvoidClassGapsBlock):
+            for day in days:
+                slots = class_day_slots.get((sb.class_id, day), [])
+                if len(slots) < 2:
+                    continue
                 span = slots[-1] - slots[0] + 1
                 gaps = span - len(slots)
                 penalty += gaps * sb.weight
