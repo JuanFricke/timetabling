@@ -19,4 +19,4 @@ COPY src/ ./src/
 COPY migrations/ ./migrations/
 COPY data/ ./data/
 
-CMD ["uv", "run", "python", "-m", "timetabling.main", "solve"]
+CMD ["uv", "run", "python", "-m", "timetabling.main", "serve"]

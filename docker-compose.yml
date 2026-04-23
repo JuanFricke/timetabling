@@ -20,9 +20,12 @@ services:
 
   app:
     build: .
+    restart: unless-stopped
     depends_on:
       db:
         condition: service_healthy
+    ports:
+      - "5000:5000"
     environment:
       DATABASE_URL: mysql+pymysql://${MYSQL_USER:-app}:${MYSQL_PASSWORD:-apppass}@db:3306/${MYSQL_DATABASE:-timetabling}
       HARD_BLOCKS_PATH: /app/data/input/hard_blocks.json
@@ -30,9 +33,10 @@ services:
       OUTPUT_DIR: /app/data/output
       CP_TIME_LIMIT_SECONDS: ${CP_TIME_LIMIT_SECONDS:-60}
       LS_MAX_ITERATIONS: ${LS_MAX_ITERATIONS:-5000}
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY:-change-me-in-production}
     volumes:
       - ./data:/app/data
-    command: ["uv", "run", "python", "-m", "timetabling.main", "solve"]
+    command: ["uv", "run", "python", "-m", "timetabling.main", "serve"]
 
 volumes:
   mysql_data:
