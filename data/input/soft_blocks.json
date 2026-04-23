@@ -116,6 +116,22 @@
       "class_id": "C2",
       "max_consecutive": 2,
       "weight": 4
+    },
+    {
+      "type": "avoid_class_gaps",
+      "class_id": "C1",
+      "weight": 5,
+      "_comment": "Turma 1A nao deve ter periodos vagos entre aulas no mesmo dia"
+    },
+    {
+      "type": "avoid_class_gaps",
+      "class_id": "C2",
+      "weight": 5
+    },
+    {
+      "type": "avoid_class_gaps",
+      "class_id": "C3",
+      "weight": 4
     }
   ]
 }
