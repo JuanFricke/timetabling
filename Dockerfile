@@ -11,7 +11,7 @@ ENV UV_LINK_MODE=copy
 ENV PYTHONPATH=/app/src
 
 # Install dependencies (cached layer)
-COPY pyproject.toml .python-version uv.lock ./
+COPY pyproject.toml .python-version uv.lock README.md ./
 RUN uv sync --frozen --no-dev
 
 # Copy source code
